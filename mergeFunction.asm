@@ -10,7 +10,7 @@
 // TODO what information does merge need once both copies return?
 //	destination address (address of first element of first array)
 // 	length of merged array	
-//	 
+// TODO compute/save length of array, destination address online function body rather than pushing first address twice
 /////////////////////////////
 // Push return address
 @0
@@ -20,7 +20,17 @@ D=A
 @0
 A=M
 M=D
-// Push address of first element array
+// Push address of length of merged array
+@0
+M=M+1
+@17
+D=M
+@19
+D=D+M
+@0
+A=M
+M=D
+// Push address of first element array TODO don't pop me in second copy call
 @0
 M=M+1
 @16
@@ -65,17 +75,17 @@ M=D
 // Requires operands on the stack
 (MERGE)
 // Clear virtual registers
-@1
-M=0
-@2
-M=0
-@3
-M=0
-@4
-M=0
-@5
-M=0
-// Save length of second array in R5
+//@1
+//M=0
+//@2
+//M=0
+//@3
+//M=0
+//@4
+//M=0
+//@5
+//M=0
+// Pop and save length of second array in R5
 @0
 A=M
 D=M
@@ -83,7 +93,7 @@ D=M
 M=D
 @0
 M=M-1
-// Save address of first element of second array in R4
+// Pop and save address of first element of second array in R4
 @0
 A=M
 D=M
@@ -128,16 +138,16 @@ M=D
 0; JMP
 (RET_COPY_ONE)
 // Clear virtual registers
-@1
-M=0
-@2
-M=0
-@3
-M=0
-@4
-M=0
-@5
-M=0
+//@1
+//M=0
+//@2
+//M=0
+//@3
+//M=0
+//@4
+//M=0
+//@5
+//M=0
 // Save length of first array in R3
 @0
 A=M
@@ -191,6 +201,8 @@ M=D
 0; JMP
 (RET_COPY_TWO)
 // Arrays copied, time to merge
+//To merge, need source addresses (2000 and 3000), length of each array, first address of first array
+//
 @RET_MERGE
 0; JMP
 //////
@@ -198,14 +210,14 @@ M=D
 // Requires operands on the stack
 (COPY)
 // Clear virtual registers
-@1
-M=0
-@2
-M=0
-@3
-M=0
-@4
-M=0
+//@1
+//M=0
+//@2
+//M=0
+//@3
+//M=0
+//@4
+//M=0
 // Save destination address in R4
 @0
 A=M
