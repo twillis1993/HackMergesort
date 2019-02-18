@@ -10,7 +10,7 @@ M=D
 
 Should choose 1000 as base of stack
 
-Mergesort pseudocode
+# Mergesort pseudocode
 
 Push return address, address of first array element, and length onto stack.
 
@@ -18,7 +18,7 @@ If length is 1, return. If not, call merge on mergesorted halves of array.
 
 Write integer divide subroutine and call this to determine half length.
 
-Merge pseudocode (could write separately)
+# Merge pseudocode (could write separately)
 
 Args: return address, address of first element of first half, length of first half, address of first element of second array, length of second half.
 
@@ -26,7 +26,7 @@ Copy two halves of array to free memory e.g starting at 10000 and 11000. Then wh
 
 Could have array copy routine. 
 
-Copy pseudocode:
+# Copy pseudocode:
 
 Needs args: return address, address of first element, length of array, destination address.
 
