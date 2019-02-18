@@ -8,6 +8,7 @@
 // TODO limited to arrays of length 1000 by the temporary memory used in copy
 // TODO compute/save length of array, destination address online function body rather than pushing first address twice
 // TODO resolve having first array arguments on stack and length second in R5
+// TODO current issue with merge loop, I think it relates to how we increment the indices, not breaking out of it even after 20000 ticks
 /////////////////////////////
 // Push return address
 @0
@@ -288,6 +289,9 @@ M=M+1
 @MERGE_LOOP
 0; JMP
 (END_MERGE_LOOP)
+// TODO remove me
+@RET_MERGE
+0; JMP
 // if first array still has elements, copy, otherwise copy rest of array 2 elements
 @2
 D=M

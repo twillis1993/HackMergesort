@@ -18,7 +18,7 @@ set RAM[22] 5,
 set RAM[23] 2,
 set RAM[24] 4,
 
-repeat 600 {
+repeat 20000 {
 	ticktock;
 }
 output;
