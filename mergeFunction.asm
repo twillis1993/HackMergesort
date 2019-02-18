@@ -213,14 +213,14 @@ M=0
 D=M
 @2
 D=M-D
-@END_MERGE_LOOP
+@COPY_1_LAST
 D; JEQ
 // Check for termination condition for second array
 @5
 D=M
 @3
 D=M-D
-@END_MERGE_LOOP
+@COPY_2_LAST
 D; JEQ
 // else compare current elements
 // current element in first array in R6
@@ -294,81 +294,15 @@ M=D
 M=M+1
 @MERGE_LOOP
 0; JMP
-(END_MERGE_LOOP)
 // if first array still has elements, copy, otherwise copy rest of array 2 elements
-@2
-D=M
-D=D-1
-@4
-D=D-M
-@COPY_2_LAST
-D; JEQ
-// still elements in first array, copy the rest of it, else copy second array (COPY_2_LAST)
 (COPY_1_LAST)
-// check whether there are any elements in first array left to copy
-@2
-D=M
-D=D-1
-@4
-D=D-M
 @RET_MERGE
-D; JEQ
-// copying element of first array: get index into destination array as sum of indices into each of the two arrays being merged
-@4
-D=M
-@5
-D=D+M
-// D is now index into destination array. Add to address of first element to set D to destination address
-@1
-D=D+M
-// Save destination address in R8
-@8
-M=D
-// Get current element of first array in D
-@6
-D=M
-// Write to destination address
-@8
-A=M
-M=D
-// Increment index into copy of first array
-@4
-M=M+1
-@COPY_1_LAST
 0; JMP
-// else copy what is left of second array
+
 (COPY_2_LAST)
-// check whether there are any elements in first array left to copy
-@3
-D=M
-D=D-1
-@5
-D=D-M
 @RET_MERGE
-D; JEQ
-// copying element of second array: get index into destination array as sum of indices into each of the two arrays being merged
-@4
-D=M
-@5
-D=D+M
-// D is now index into destination array. Add to destination address to set D to destination address
-@1
-D=D+M
-// Save destination address in R8
-@8
-M=D
-// Get current element of second array in D
-@7
-D=M
-// Write to destination address
-@8
-A=M
-M=D
-// Increment index into copy of second array
-@5
-M=M+1
-@COPY_2_LAST
 0; JMP
+
 //////
 // COPY
 // Requires operands on the stack 
