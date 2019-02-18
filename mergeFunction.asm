@@ -12,6 +12,7 @@
 // TODO all over the place, sometimes ends in the merge loop, sometimes outside it
 // up to copy seems fine
 // tested up until merge loop, seemed fine
+// TODO use copy function to finish merge routine rather than current ad hoc approach
 /////////////////////////////
 // Push return address
 @0
@@ -221,7 +222,6 @@ D=M
 D=M-D
 @END_MERGE_LOOP
 D; JEQ
-//old version: M-D; JEQ
 // else compare current elements
 // current element in first array in R6
 @4
@@ -295,8 +295,6 @@ M=M+1
 @MERGE_LOOP
 0; JMP
 (END_MERGE_LOOP)
-@RET_MERGE
-0; JMP
 // if first array still has elements, copy, otherwise copy rest of array 2 elements
 @2
 D=M
@@ -371,11 +369,10 @@ M=D
 M=M+1
 @COPY_2_LAST
 0; JMP
-@RET_MERGE
-0; JMP
 //////
 // COPY
-// Requires operands on the stack
+// Requires operands on the stack 
+// [BASE] return address, source address, length of array, destination address [TOP]
 (COPY)
 // Save destination address in R4
 @0
