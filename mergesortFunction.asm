@@ -8,6 +8,16 @@
 // Requires operands on the stack
 // Args: BASE return address, address of array's first element, length of array TOP
 (MERGESORT)
+// Save but do not pop return address
+@2
+D=A
+@0
+A=M
+D=M-D
+A=D
+D=M
+@2
+M=D
 // Save (but do not pop) length of input array in R1
 @0
 A=M
@@ -17,7 +27,7 @@ M=D
 @1
 D=M
 // Is length of array 1?
-@RET_MERGESORT
+@2
 D-1; JEQ
 // else make merge call on mergesorted arrays
 // work out length of each subarray
@@ -173,14 +183,15 @@ D=M
 @0
 A=M
 M=D
-// TODO: funny stuff seems to be happening once we hit recursive calls
 @MERGESORT
 0; JMP
 (RET_MERGESORT_1)
+@END
+0; JMP
 @MERGESORT
 0; JMP
 (RET_MERGESORT_2)
-(RET_MERGESORT)
+0; JMP
 @MERGE
 0; JMP
 (RET_MERGESORT_MERGE)
