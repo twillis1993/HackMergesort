@@ -8,35 +8,63 @@
 // Requires operands on the stack
 // Args: return address, address of first array's first element, length of first array
 (MERGESORT)
-// Pop and save length of input array in R1
+// Save (but do not pop) length of input array in R1
 @0
 A=M
 D=M
 @1
 M=D
+@1
+D=M
+// Is length of array 1?
+@RET_MERGESORT
+D-1; JEQ
+// else make merge call on mergesorted arrays
+// Save (but do not pop) input array's first address in R2
 @0
-M=M-1
-// Pop and save input array's first address in R2
-@0
-A=M
+A=M-1 // looking at penultimate stack address
 D=M
 @2
 M=D
+// Push function return address 
 @0
-M=M-1
-// If length is 1, return 
+M=M+1
+@RET_DIV
+D=A
+@0
+A=M
+M=D
+// Push dividend (length of array)
+@0
+M=M+1
 @1
 D=M
-@RET_MERGESORT
-D-1; JEQ
-// else
-// jump 
-// into
-// recursive
-// calls
-(RET_MERGESORT)
-// Pop return address and return
 @0
+A=M
+M=D
+// Push divisor (it's always 2)
+@0
+M=M+1
+@2
+D=A
+@0
+A=M
+M=D
+(RET_DIV)
+@15
+M=D
+@END
+0; JMP
+// more stuff to go here
+////
+(RET_MERGESORT)
+// Pop all arguments off and return
+// Decrement stack pointer by 2 to get to return address
+@2
+D=A
+@0
+M=M-D
+// Stack pointer now points to element storing return address
 A=M
 D=M
 @0
