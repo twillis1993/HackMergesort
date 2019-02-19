@@ -1,8 +1,8 @@
-
-
-
-
-
+@MERGESORT
+0; JMP
+(END)
+@END
+0; JMP
 //////////////
 // MERGESORT
 // Requires operands on the stack
@@ -24,8 +24,16 @@ D=M
 M=D
 @0
 M=M-1
-
-
+// If length is 1, return 
+@1
+D=M
+@RET_MERGESORT
+D-1; JEQ
+// else
+// jump 
+// into
+// recursive
+// calls
 (RET_MERGESORT)
 // Pop return address and return
 @0
@@ -407,5 +415,52 @@ M=D
 @4
 M=M+1
 @COPY_LOOP
+0; JMP
+//////
+// DIV
+// Requires operands on the stack BASE return address dividend divisor TOP
+(DIV)
+// Save divisor in R3 
+@0
+A=M
+D=M
+@3
+M=D
+@0
+M=M-1
+// Save dividend in R2
+@0
+A=M
+D=M
+@2
+M=D
+@0 
+M=M-1
+// Save return address in R1
+@0
+A=M
+D=M
+@1
+M=D
+@0
+M=M-1
+(DIV_LOOP)
+@2
+D=M
+@3
+D=D-M
+@DIV_END
+D; JLT
+@2
+M=D
+@4
+M=M+1
+@DIV_LOOP
+0; JMP
+(DIV_END)
+@4
+D=M
+@1
+A=M
 0; JMP
 //////////////
