@@ -13,6 +13,7 @@
 // up to copy seems fine
 // tested up until merge loop, seemed fine
 // TODO use copy function to finish merge routine rather than current ad hoc approach
+// Going to COPY_2_LAST, but expecting
 /////////////////////////////
 // Push return address
 @0
@@ -195,6 +196,9 @@ D=M
 M=D
 @0
 M=M-1
+// Save this address as the destination address, too, for edge case where one array is empty
+@8
+M=D
 // Move length of second array from R5 to R3
 @5
 D=M
@@ -213,14 +217,14 @@ M=0
 D=M
 @2
 D=M-D
-@COPY_1_LAST
+@COPY_2_LAST
 D; JEQ
 // Check for termination condition for second array
 @5
 D=M
 @3
 D=M-D
-@COPY_2_LAST
+@COPY_1_LAST
 D; JEQ
 // else compare current elements
 // current element in first array in R6
@@ -294,15 +298,87 @@ M=D
 M=M+1
 @MERGE_LOOP
 0; JMP
-// if first array still has elements, copy, otherwise copy rest of array 2 elements
+// if first array still has elements, copy, otherwise copy rest of second array elements
 (COPY_1_LAST)
+// Push return address
+@0
+M=M+1
 @RET_MERGE
+D=A
+@0
+A=M
+M=D
+//  Push address of first remaining element of first array
+@0
+M=M+1
+@4
+D=M
+@2000
+A=A+D
+D=A
+@0
+A=M
+M=D
+//  Push length of remaining part of first array
+@0
+M=M+1
+@2
+D=M
+@4
+D=D-M
+@0
+A=M
+M=D
+//  Push destination address
+@0
+M=M+1
+@8
+D=M
+@0
+A=M
+M=D
+@COPY
 0; JMP
-
 (COPY_2_LAST)
+// Push return address
+@0
+M=M+1
 @RET_MERGE
+D=A
+@0
+A=M
+M=D
+//  Push address of first remaining element of second array
+@0
+M=M+1
+@5
+D=M
+@3000
+A=A+D
+D=A
+@0
+A=M
+M=D
+//  Push length of remaining part of second array
+@0
+M=M+1
+@3
+D=M
+@5
+D=D-M
+@0
+A=M
+M=D
+// Push destination address
+@0
+M=M+1
+@8
+D=M
+@0
+A=M
+M=D
+@COPY
 0; JMP
-
 //////
 // COPY
 // Requires operands on the stack 
