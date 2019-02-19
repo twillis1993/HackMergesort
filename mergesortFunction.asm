@@ -6,7 +6,7 @@
 //////////////
 // MERGESORT
 // Requires operands on the stack
-// Args: return address, address of first array's first element, length of first array
+// Args: BASE return address, address of array's first element, length of array TOP
 (MERGESORT)
 // Save (but do not pop) length of input array in R1
 @0
@@ -49,13 +49,144 @@ M=D
 @DIV
 0; JMP
 (RET_DIV)
-@15
+@1
 M=D
 @END
 0; JMP
-// more stuff to go here
-////
+// TODO remove me NB: not state now, but to come
+// R1: div result i.e. length of first half of array
+// R2: length of input array
+// R3: address of array's first element
+// NB: state of stack [BASE] return address of mergesort, address of array's first element, length of input array [TOP]
+// Pop and save length of array in R2
+@0
+A=M
+D=M
+@2
+M=D
+@0
+M=M-1
+// Pop and save address of array's first element
+@0
+A=M
+D=M
+@3
+M=D
+@0
+M=M-1
+// State of stack [BASE] return address [TOP]
+//call mergesort on each half of the array
+//mergesort with first address of first array, length of first array (which is division result), return address of mergesort
+//mergesort with first address of second array, which is address of first array plus length of first array, length of second array (which is length of array less result of division), return address of mergesort
+//call merge on two with the [BASE] return address first address of the first array, length of first array, first address of second array, length of second array
+// Push arguments for merge
+@0
+M=M+1
+@RET_MERGESORT_MERGE
+D=A
+@0
+A=M
+M=D
+// Push address of first element of first half of array
+@0
+M=M+1
+@3
+D=M
+@0
+A=M
+M=D
+// Push length of first half of array
+@0
+M=M+1
+@1
+D=M
+@0
+A=M
+M=D
+// Push address of first element of second half of array
+@0
+M=M+1
+@3
+D=M
+@1
+D=D+M
+@0
+A=M
+M=D
+// Push length of second half of array
+@0
+M=M+1
+@2
+D=M
+@1
+D=D-M
+@0
+A=M
+M=D
+// Push arguments for array 2's mergesort 
+// Push return address of recursive call on second half of array
+@0
+M=M+1
+@RET_MERGESORT_2
+D=A
+@0
+A=M
+M=D
+// Push address of first element of second half of array
+@0
+M=M+1
+@3
+D=M
+@1
+D=D+M
+@0
+A=M
+M=D
+// Push length of second half of array
+@0
+M=M+1
+@2
+D=M
+@1
+D=D-M
+@0
+A=M
+M=D
+// Push arguments for array 1's mergesort 
+// Push return address
+@0
+M=M+1
+@RET_MERGESORT_1
+D=A
+@0
+A=M
+M=D
+// Push address of first element of first half of array
+@0
+M=M+1
+@3
+D=M
+@0
+A=M
+M=D
+// Push length of first half of array
+@0
+M=M+1
+@1
+D=M
+@0
+A=M
+M=D
+@MERGESORT
+0; JMP
+(RET_MERGESORT_1)
+@MERGESORT
+0; JMP
+(RET_MERGESORT_2)
 (RET_MERGESORT)
+@MERGE
+0; JMP
+(RET_MERGESORT_MERGE)
 // Pop all arguments off and return
 // Decrement stack pointer by 2 to get to return address
 @2
