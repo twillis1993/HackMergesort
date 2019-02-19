@@ -1,4 +1,5 @@
-// TODO: not invoking copy for length two case
+// TODO: In length two case we copy but do not terminate
+// TODO:
 // TODO: we get a mergesort case (6th) where the length of the input array is 8, 3001 is the location of the first element, and 177 is the return address
 @MERGESORT
 0; JMP
@@ -350,7 +351,6 @@ M=D
 @COPY
 0; JMP
 (RET_COPY_TWO)
-// TODO in length 2 case, 3 is copied to 3000 correctly
 // Arrays copied, time to merge
 //To merge, need source addresses (2000 and 3000), length of each array, first address of first array
 // Current state of stack: [BASE] return address first address of first array, length of first array [TOP]
