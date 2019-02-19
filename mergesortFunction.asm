@@ -1,3 +1,4 @@
+// TODO: always pop!
 @MERGESORT
 0; JMP
 (END)
@@ -8,28 +9,58 @@
 // Requires operands on the stack
 // Args: BASE return address, address of array's first element, length of array TOP
 (MERGESORT)
-// Save but do not pop return address
-@2
-D=A
-@0
-A=M
-D=M-D
-A=D
-D=M
-@2
-M=D
-// Save (but do not pop) length of input array in R1
+// Save length of array in R1
 @0
 A=M
 D=M
 @1
 M=D
-@1
+@0
+M=M-1
+// Save address of array's first element in R2
+@0
+A=M
 D=M
+@2
+M=D
+@0 
+M=M-1
+// Save return address in R3
+@0
+A=M
+D=M
+@3
+M=D
+@0
+M=M-1
 // Is length of array 1?
-@2
+@3
 D-1; JEQ
-// else make merge call on mergesorted arrays
+// else push these arguments back on the stack and make merge call on mergesorted arrays
+// Push function return address (in R3)
+@0
+M=M+1
+@3
+D=M
+@0
+A=M
+M=D
+// Push first address of array
+@0
+M=M+1
+@2
+D=M
+@0
+A=M
+M=D
+// Push length of array
+@0
+M=M+1
+@1
+D=M
+@0
+A=M
+M=D
 // work out length of each subarray
 // NB: state of stack [BASE] return address of mergesort, address of array's first element, length of first array [TOP]
 // Push function return address 
@@ -61,7 +92,6 @@ M=D
 (RET_DIV)
 @1
 M=D
-// TODO remove me NB: not state now, but to come
 // R1: div result i.e. length of first half of array
 // R2: length of input array
 // R3: address of array's first element
@@ -186,8 +216,6 @@ M=D
 @MERGESORT
 0; JMP
 (RET_MERGESORT_1)
-@END
-0; JMP
 @MERGESORT
 0; JMP
 (RET_MERGESORT_2)
