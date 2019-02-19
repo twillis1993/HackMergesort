@@ -7,52 +7,8 @@
 //////////////////////////////
 // TODO limited to arrays of length 1000 by the temporary memory used in copy
 // TODO hacky solution by incrementing destination address for remainder array copy
-/////////////////////////////
-// Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
-@0
-A=M
-M=D
-// Push address of first element array
-@0
-M=M+1
-@16
-D=M
-@0
-A=M
-M=D
-// Push length of first array
-@0
-M=M+1
-@17
-D=M
-@0
-A=M
-M=D
-// Push address of second element array
-@0
-M=M+1
-@18
-D=M
-@0
-A=M
-M=D
-// Push length of second array
-@0
-M=M+1
-@19
-D=M
-@0
-A=M
-M=D
-//Call MERGE
 @MERGE
 0; JMP
-(RET_MERGE)
-// END
 (END)
 @END
 0;JMP
