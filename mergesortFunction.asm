@@ -173,6 +173,7 @@ D=M
 @0
 A=M
 M=D
+// TODO: funny stuff seems to be happening once we hit recursive calls
 @MERGESORT
 0; JMP
 (RET_MERGESORT_1)
