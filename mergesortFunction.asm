@@ -1,61 +1,40 @@
-// MERGE function merges two arrays
-// 0 will be stack pointer, starting at 100
-// Input is in 16 (address of first element of first array), 17 (length of first array), 18 (address of first element of second array), 19 (length of second array)
-// In place, so we don't need to specify destination address
-// Reserve 1-15 as virtual registers
-// Push function return address 
-//////////////////////////////
-// TODO limited to arrays of length 1000 by the temporary memory used in copy
-// TODO hacky solution by incrementing destination address for remainder array copy
-/////////////////////////////
-// Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
+
+
+
+
+
+//////////////
+// MERGESORT
+// Requires operands on the stack
+// Args: return address, address of first array's first element, length of first array
+(MERGESORT)
+// Pop and save length of input array in R1
 @0
 A=M
+D=M
+@1
 M=D
-// Push address of first element array
 @0
-M=M+1
-@16
+M=M-1
+// Pop and save input array's first address in R2
+@0
+A=M
+D=M
+@2
+M=D
+@0
+M=M-1
+
+
+(RET_MERGESORT)
+// Pop return address and return
+@0
+A=M
 D=M
 @0
-A=M
-M=D
-// Push length of first array
-@0
-M=M+1
-@17
-D=M
-@0
-A=M
-M=D
-// Push address of second element array
-@0
-M=M+1
-@18
-D=M
-@0
-A=M
-M=D
-// Push length of second array
-@0
-M=M+1
-@19
-D=M
-@0
-A=M
-M=D
-//Call MERGE
-@MERGE
+M=M-1
+A=D
 0; JMP
-(RET_MERGE)
-// END
-(END)
-@END
-0;JMP
 //////////////
 // MERGE
 // Requires operands on the stack
