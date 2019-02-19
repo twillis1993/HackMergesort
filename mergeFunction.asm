@@ -8,6 +8,7 @@
 // TODO limited to arrays of length 1000 by the temporary memory used in copy
 // TODO currently have shorter array not being copied to the destination, and rest of longer array being saved a space too early. I think this is because we miss an iteration of the shorter array
 // TODO main comparison-driven merge runs fine, it's just that the remainder array is being copied one address short
+// TODO hacky solution by incrementing destination address for remainder array copy
 /////////////////////////////
 // Push return address
 @0
@@ -325,7 +326,7 @@ M=D
 @0
 M=M+1
 @8
-D=M
+D=M+1
 @0
 A=M
 M=D
@@ -365,7 +366,7 @@ M=D
 @0
 M=M+1
 @8
-D=M
+D=M+1
 @0
 A=M
 M=D
