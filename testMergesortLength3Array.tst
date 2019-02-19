@@ -3,6 +3,8 @@ output-file testMergesortLength3Array.out,
 compare-to testMergesortLength3Array.cmp,
 output-list RAM[20]%D2.6.2 RAM[21]%D2.6.2 RAM[22]%D2.6.2,
 
+breakpoint PC 4,
+
 // Set stack contents
 // return address
 set RAM[101] 2,
@@ -17,7 +19,7 @@ set RAM[0] 103,
 // Set memory for arrays
 set RAM[20] 2,
 set RAM[21] 1,
-set RAM[20] 3,
+set RAM[22] 3,
 
 repeat 80000 {
 	ticktock;

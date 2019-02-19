@@ -1,4 +1,5 @@
 // TODO: not invoking copy for length two case
+// TODO: we get a mergesort case (6th) where the length of the input array is 8, 3001 is the location of the first element, and 177 is the return address
 @MERGESORT
 0; JMP
 (END)
@@ -92,6 +93,7 @@ M=D
 @DIV
 0; JMP
 (RET_DIV)
+// TODO in length 3 case, first recursive mergesort is fine, get to here in second recursive mergesort with length 2 subarray
 @1
 M=D
 // At the moment, R1: div result i.e. length of first half of array
@@ -244,6 +246,7 @@ A=D
 //////////////
 // MERGE
 // Requires operands on the stack
+// TODO might be a problem with popping and overwriting things here
 (MERGE)
 // Pop and save length of second array in R5
 @0
@@ -297,6 +300,7 @@ M=D
 @COPY
 0; JMP
 (RET_COPY_ONE)
+// TODO in length 2 case, 3 is copied to 3000 correctly
 // Save (but do not pop as the merging requires it) length of first array in R3
 @0
 A=M
@@ -346,9 +350,10 @@ M=D
 @COPY
 0; JMP
 (RET_COPY_TWO)
+// TODO in length 2 case, 3 is copied to 3000 correctly
 // Arrays copied, time to merge
 //To merge, need source addresses (2000 and 3000), length of each array, first address of first array
-// Current state of stack: [BASE] first address of first array, length of first array [TOP]
+// Current state of stack: [BASE] return address first address of first array, length of first array [TOP]
 // Length of second array is in R5 
 // R1 = address of first element of first array
 // R2 = length of first array
