@@ -6,14 +6,8 @@
 // Push function return address 
 //////////////////////////////
 // TODO limited to arrays of length 1000 by the temporary memory used in copy
-// TODO compute/save length of array, destination address online function body rather than pushing first address twice
-// TODO resolve having first array arguments on stack and length second in R5
-// TODO current issue with merge loop, I think it relates to how we increment the indices, not breaking out of it even after 20000 ticks
-// TODO all over the place, sometimes ends in the merge loop, sometimes outside it
-// up to copy seems fine
-// tested up until merge loop, seemed fine
-// TODO use copy function to finish merge routine rather than current ad hoc approach
-// Going to COPY_2_LAST, but expecting
+// TODO currently have shorter array not being copied to the destination, and rest of longer array being saved a space too early. I think this is because we miss an iteration of the shorter array
+// TODO main comparison-driven merge runs fine, it's just that the remainder array is being copied one address short
 /////////////////////////////
 // Push return address
 @0
@@ -55,7 +49,7 @@ D=M
 @0
 A=M
 M=D
-//Call DIV
+//Call MERGE
 @MERGE
 0; JMP
 (RET_MERGE)
@@ -188,7 +182,7 @@ D=M
 M=D
 @0
 M=M-1
-// Pop and save address of first element of first array in R1 // TODO this was labelled as 1st of 2nd array, make sure there's not a bug here
+// Pop and save address of first element of first array in R1
 @0
 A=M
 D=M
@@ -243,12 +237,10 @@ A=A+D
 D=M
 @7
 M=D
-// compare current elements
-@7
-D=M
+// compare current elements with (current element in second array - current element in first array)
 @6
 D=D-M
-// if D >0, copy second, else copy first, then increment relevant index
+// if D < 0, copy second, else copy first, then increment relevant index
 @COPY_2_EL
 D; JLT
 // copying element of first array: get index into destination array as sum of indices into each of the two arrays being merged
