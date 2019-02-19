@@ -20,12 +20,8 @@ D=M
 @RET_MERGESORT
 D-1; JEQ
 // else make merge call on mergesorted arrays
-// Save (but do not pop) input array's first address in R2
-@0
-A=M-1 // looking at penultimate stack address
-D=M
-@2
-M=D
+// work out length of each subarray
+// NB: state of stack [BASE] return address of mergesort, address of array's first element, length of first array [TOP]
 // Push function return address 
 @0
 M=M+1
@@ -50,6 +46,8 @@ D=A
 @0
 A=M
 M=D
+@DIV
+0; JMP
 (RET_DIV)
 @15
 M=D
@@ -448,6 +446,15 @@ M=M+1
 // DIV
 // Requires operands on the stack BASE return address dividend divisor TOP
 (DIV)
+// Clear virtual registers
+@1
+M=0
+@2
+M=0
+@3
+M=0
+@4
+M=0
 // Save divisor in R3 
 @0
 A=M
