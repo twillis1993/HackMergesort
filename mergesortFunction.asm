@@ -1,4 +1,3 @@
-// TODO: always pop!
 @MERGESORT
 0; JMP
 (END)
