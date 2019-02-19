@@ -4,37 +4,14 @@
 // Output is in 18
 // Reserve 1-15 as virtual registers
 // The next 7 lines place a single argument from 0 on to the stack
-// Push function return address 
-@0
-M=M+1
-@RET_DIV
-D=A
-@0
-A=M
-M=D
-// Push dividend
-@0
-M=M+1
-@16
-D=M
-@0
-A=M
-M=D
-// Push divisor
-@0
-M=M+1
-@17
-D=M
-@0
-A=M
-M=D
-//Call DIV
 @DIV
 0; JMP
 (RET_DIV)
 // Save return value
-@18
+@15
 M=D
+@END
+0; JMP
 // END
 (END)
 @END
