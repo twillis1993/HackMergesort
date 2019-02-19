@@ -18,7 +18,7 @@ set RAM[0] 103,
 set RAM[20] 2,
 set RAM[21] 1,
 
-repeat 20000 {
+repeat 40000 {
 	ticktock;
 }
 output;

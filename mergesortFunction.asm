@@ -1,3 +1,4 @@
+// TODO: not invoking copy for length two case
 @MERGESORT
 0; JMP
 (END)
@@ -33,7 +34,10 @@ M=D
 @0
 M=M-1
 // Is length of array 1?
+@1
+D=M
 @3
+A=M
 D-1; JEQ
 // else push these arguments back on the stack and make merge call on mergesorted arrays
 // Push function return address (in R3)
@@ -61,7 +65,6 @@ D=M
 A=M
 M=D
 // work out length of each subarray
-// NB: state of stack [BASE] return address of mergesort, address of array's first element, length of first array [TOP]
 // Push function return address 
 @0
 M=M+1
@@ -91,7 +94,7 @@ M=D
 (RET_DIV)
 @1
 M=D
-// R1: div result i.e. length of first half of array
+// At the moment, R1: div result i.e. length of first half of array
 // R2: length of input array
 // R3: address of array's first element
 // NB: state of stack [BASE] return address of mergesort, address of array's first element, length of input array [TOP]
@@ -212,13 +215,16 @@ D=M
 @0
 A=M
 M=D
+// TODO remove me: stack seems fine here for length 2 case on first mergesort call
+// This is ~176 in the ROM
 @MERGESORT
 0; JMP
+// TODO do we ever exit the above recursive call? Yes in the length 2 case
 (RET_MERGESORT_1)
 @MERGESORT
 0; JMP
 (RET_MERGESORT_2)
-0; JMP
+// TODO do we ever exit the above recursive call? Yes in the length 2 case
 @MERGE
 0; JMP
 (RET_MERGESORT_MERGE)
