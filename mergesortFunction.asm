@@ -51,8 +51,6 @@ M=D
 (RET_DIV)
 @1
 M=D
-@END
-0; JMP
 // TODO remove me NB: not state now, but to come
 // R1: div result i.e. length of first half of array
 // R2: length of input array
@@ -75,9 +73,7 @@ M=D
 @0
 M=M-1
 // State of stack [BASE] return address [TOP]
-//call mergesort on each half of the array
-//mergesort with first address of first array, length of first array (which is division result), return address of mergesort
-//mergesort with first address of second array, which is address of first array plus length of first array, length of second array (which is length of array less result of division), return address of mergesort
+// Mergesort each array, then call merge on the mergesorted arrays
 //call merge on two with the [BASE] return address first address of the first array, length of first array, first address of second array, length of second array
 // Push arguments for merge
 @0
