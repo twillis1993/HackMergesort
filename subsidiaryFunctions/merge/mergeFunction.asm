@@ -199,6 +199,7 @@ D=D-M
 @COPY_2_EL
 D; JLT
 // copying element of first array: get index into destination array as sum of indices into each of the two arrays being merged
+//(COPY_1_EL) never used, but useful to have here TODO
 @4
 D=M
 @5
@@ -288,13 +289,13 @@ M=D
 0; JMP
 (COPY_2_LAST)
 // Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
-@0
-A=M
-M=D
+//@0
+//M=M+1
+//@RET_MERGE
+//D=A
+//@0
+//A=M
+//M=D
 //  Push address of first remaining element of second array
 @0
 M=M+1
