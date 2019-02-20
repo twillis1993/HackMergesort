@@ -253,7 +253,7 @@ D=M
 M=D
 @0
 M=M-1
-// Copy second array to 3000 onwards
+// Copy second array to 10000 onwards
 // Push function return address
 @0
 M=M+1
@@ -302,7 +302,7 @@ A=M-1
 D=M
 @2
 M=D
-// Copy first array to 2000 onwards
+// Copy first array to 5000 onwards
 // Push function return address
 @0
 M=M+1
