@@ -13,7 +13,7 @@ def configureArgumentParser():
 
 	inputGroup.add_argument("-i", "--input", nargs='+', help="List of numbers to sort", type=int)
 
-	inputGroup.add_argument("-n", "--numberOfRandomNumbers",  action=GenerateRandomInputAction, help="Number of random integers to generate as input to mergesort. Values are chosen from between -100 and 100. Argument must have value in interval [1,1000].", type=int, choices=range(1,1001), metavar="[1-1000]")
+	inputGroup.add_argument("-n", "--numberOfRandomNumbers",  action=GenerateRandomInputAction, help="Number of random integers to generate as input to mergesort. Values are chosen from between -100 and 100. Argument must have value in interval [1,10000].", type=int, choices=range(1,10001), metavar="[1-10000]")
 
 	return parser
 
@@ -30,13 +30,13 @@ def writeTstScript(argsDict):
 		fh.write("breakpoint PC 3,\n")
 		fh.write("\n")
 		fh.write("set RAM[101] 2,\n")
-		fh.write("set RAM[102] 4000,\n")
+		fh.write("set RAM[102] 15000,\n")
 		fh.write("set RAM[103] %d,\n" % len(argsDict["input"]))
 		fh.write("\n")
 		fh.write("set RAM[0] 103,\n")
 		fh.write("\n")
 		for i, x in enumerate(argsDict["input"]):
-			fh.write("set RAM[%d] %d,\n" % (4000+i, argsDict["input"][i]))
+			fh.write("set RAM[%d] %d,\n" % (15000+i, argsDict["input"][i]))
 
 		fh.write("repeat {\n\tticktock;\n}\n")
 
@@ -47,7 +47,7 @@ class OutputNameAction(argparse.Action):
 
 class GenerateRandomInputAction(argparse.Action):
 	def __call__(self, parser, namespace, values, option_string):
-		inputNumbers = [random.randint(-100,101) for x in range(0,values)]
+		inputNumbers = [random.randint(-100,100) for x in range(0,values)]
 		setattr(namespace, "input", inputNumbers)
 	
 if __name__  == "__main__":

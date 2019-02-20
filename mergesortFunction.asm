@@ -281,7 +281,7 @@ M=D
 // Push destination address
 @0
 M=M+1
-@3000
+@10000
 D=A
 @0
 A=M
@@ -330,7 +330,7 @@ M=D
 // Push destination address
 @0
 M=M+1
-@2000
+@5000
 D=A
 @0
 A=M
@@ -399,7 +399,7 @@ D; JEQ
 // current element in first array in R6
 @4
 D=M
-@2000
+@5000
 A=A+D
 D=M
 @6
@@ -407,7 +407,7 @@ M=D
 // current element in second array R7
 @5
 D=M
-@3000
+@10000
 A=A+D
 D=M
 @7
@@ -473,7 +473,7 @@ M=M+1
 M=M+1
 @4
 D=M
-@2000
+@5000
 A=A+D
 D=A
 @0
@@ -505,7 +505,7 @@ M=D
 M=M+1
 @5
 D=M
-@3000
+@10000
 A=A+D
 D=A
 @0
