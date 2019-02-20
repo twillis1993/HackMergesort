@@ -229,13 +229,8 @@ M=D
 @MERGE
 0; JMP
 (RET_MERGESORT_MERGE)
-// Pop all arguments off and return
-// Decrement stack pointer by 2 to get to return address
-@2
-D=A
+// Pop and save return address
 @0
-M=M-D
-// Stack pointer now points to element storing return address
 A=M
 D=M
 @0
