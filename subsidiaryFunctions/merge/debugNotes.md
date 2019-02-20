@@ -16,7 +16,6 @@ Ok, `(RET_MERGE)` seems to be the only problem here.
 
 State of virtual registers is good before starting copy loop.
 
-Still a problem. Seems we just put the wrong return address on there. Ok passing.
+Still a problem. Seems we just put the wrong return address on there.
 
-# 
-
+Ok, all tests passing.

@@ -249,13 +249,13 @@ M=M+1
 // if first array still has elements, copy, otherwise copy rest of second array elements
 (COPY_1_LAST)
 // Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
-@0
-A=M
-M=D
+//@0
+//M=M+1
+//@RET_MERGE
+//D=A
+//@0
+//A=M
+//M=D
 //  Push address of first remaining element of first array
 @0
 M=M+1
