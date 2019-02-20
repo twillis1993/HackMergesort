@@ -1,5 +1,3 @@
-// TODO: In length two case we copy but do not terminate
-// TODO:
 // TODO: we get a mergesort case (6th) where the length of the input array is 8, 3001 is the location of the first element, and 177 is the return address
 @MERGESORT
 0; JMP
@@ -247,7 +245,6 @@ A=D
 //////////////
 // MERGE
 // Requires operands on the stack
-// TODO might be a problem with popping and overwriting things here
 (MERGE)
 // Pop and save length of second array in R5
 @0
@@ -301,7 +298,6 @@ M=D
 @COPY
 0; JMP
 (RET_COPY_ONE)
-// TODO in length 2 case, 3 is copied to 3000 correctly
 // Save (but do not pop as the merging requires it) length of first array in R3
 @0
 A=M
@@ -353,7 +349,7 @@ M=D
 (RET_COPY_TWO)
 // Arrays copied, time to merge
 //To merge, need source addresses (2000 and 3000), length of each array, first address of first array
-// Current state of stack: [BASE] return address first address of first array, length of first array [TOP]
+// Current state of stack: [BASE] first address of first array, length of first array [TOP]
 // Length of second array is in R5 
 // R1 = address of first element of first array
 // R2 = length of first array
@@ -433,6 +429,7 @@ D=D-M
 @COPY_2_EL
 D; JLT
 // copying element of first array: get index into destination array as sum of indices into each of the two arrays being merged
+//(COPY_1_EL) never used, but useful to have here TODO
 @4
 D=M
 @5
@@ -482,13 +479,13 @@ M=M+1
 // if first array still has elements, copy, otherwise copy rest of second array elements
 (COPY_1_LAST)
 // Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
-@0
-A=M
-M=D
+//@0
+//M=M+1
+//@RET_MERGE
+//D=A
+//@0
+//A=M
+//M=D
 //  Push address of first remaining element of first array
 @0
 M=M+1
@@ -522,13 +519,13 @@ M=D
 0; JMP
 (COPY_2_LAST)
 // Push return address
-@0
-M=M+1
-@RET_MERGE
-D=A
-@0
-A=M
-M=D
+//@0
+//M=M+1
+//@RET_MERGE
+//D=A
+//@0
+//A=M
+//M=D
 //  Push address of first remaining element of second array
 @0
 M=M+1

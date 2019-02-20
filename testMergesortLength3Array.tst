@@ -3,8 +3,7 @@ output-file testMergesortLength3Array.out,
 compare-to testMergesortLength3Array.cmp,
 output-list RAM[20]%D2.6.2 RAM[21]%D2.6.2 RAM[22]%D2.6.2,
 
-breakpoint PC 4,
-breakpoint RAM[3] 3001,
+breakpoint PC 181,
 
 // Set stack contents
 // return address
