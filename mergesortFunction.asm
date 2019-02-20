@@ -1,13 +1,13 @@
-// TODO: we get a mergesort case (6th) where the length of the input array is 8, 3001 is the location of the first element, and 177 is the return address
 @MERGESORT
 0; JMP
 (END)
 @END
 0; JMP
-//////////////
-// MERGESORT
-// Requires operands on the stack
-// Args: BASE return address, address of array's first element, length of array TOP
+//
+//	MERGESORT	
+//	Requires following arguments on the stack in order
+//	[BASE OF STACK] return address, address of array's first element, length of array [TOP OF STACK]
+//
 (MERGESORT)
 // Save length of array in R1
 @0
@@ -92,13 +92,12 @@ M=D
 @DIV
 0; JMP
 (RET_DIV)
-// TODO in length 3 case, first recursive mergesort is fine, get to here in second recursive mergesort with length 2 subarray
 @1
 M=D
-// At the moment, R1: div result i.e. length of first half of array
-// R2: length of input array
-// R3: address of array's first element
-// NB: state of stack [BASE] return address of mergesort, address of array's first element, length of input array [TOP]
+// State of the virtual registers at the moment:
+// 	R1: quotient i.e. result of division, which gives length of first half of array
+//	R2: length of input array
+// 	R3: address of array's first element
 // Pop and save length of array in R2
 @0
 A=M
@@ -115,9 +114,7 @@ D=M
 M=D
 @0
 M=M-1
-// State of stack [BASE] return address [TOP]
 // Mergesort each array, then call merge on the mergesorted arrays
-//call merge on two with the [BASE] return address first address of the first array, length of first array, first address of second array, length of second array
 // Push arguments for merge
 @0
 M=M+1
@@ -216,16 +213,13 @@ D=M
 @0
 A=M
 M=D
-// TODO remove me: stack seems fine here for length 2 case on first mergesort call
-// This is ~176 in the ROM
+// Make the recurive mergesort calls then invoke merge
 @MERGESORT
 0; JMP
-// TODO do we ever exit the above recursive call? Yes in the length 2 case
 (RET_MERGESORT_1)
 @MERGESORT
 0; JMP
 (RET_MERGESORT_2)
-// TODO do we ever exit the above recursive call? Yes in the length 2 case
 @MERGE
 0; JMP
 (RET_MERGESORT_MERGE)
@@ -237,9 +231,11 @@ D=M
 M=M-1
 A=D
 0; JMP
-//////////////
-// MERGE
-// Requires operands on the stack
+//	MERGE: merges two sorted arrays into one sorted array
+//	Requires following arguments on the stack in order
+//	[BASE OF STACK] return address, address of first array's first element, length of first array 
+//			address of first array's first element, length of first array [TOP OF STACK]
+//
 (MERGE)
 // Pop and save length of second array in R5
 @0
@@ -257,7 +253,7 @@ D=M
 M=D
 @0
 M=M-1
-// COPY to 3000 onwards
+// Copy second array to 3000 onwards
 // Push function return address
 @0
 M=M+1
@@ -306,7 +302,7 @@ A=M-1
 D=M
 @2
 M=D
-// COPY to 2000 onwards
+// Copy first array to 2000 onwards
 // Push function return address
 @0
 M=M+1
@@ -343,17 +339,16 @@ M=D
 0; JMP
 (RET_COPY_TWO)
 // Arrays copied, time to merge
-//To merge, need source addresses (2000 and 3000), length of each array, first address of first array
-// Current state of stack: [BASE] first address of first array, length of first array [TOP]
-// Length of second array is in R5 
-// R1 = address of first element of first array
-// R2 = length of first array
-// R3 = length of second array
-// R4 = index into first array
-// R5 = index into second array
-// R6 = current element in first array
-// R7 = current element in second array
-// R8 = destination address
+// State of the virtual registers at the moment:
+//	R1:  address of first element of first array
+//	R2:  length of first array
+//	R3:  length of second array
+//	R4:  index into first array
+//	R5:  index into second array
+//	R6:  current element in first array
+//	R7:  current element in second array
+//	R8:  destination address
+//
 // Pop and save length of first array in R2
 @0
 A=M
@@ -417,14 +412,14 @@ A=A+D
 D=M
 @7
 M=D
-// compare current elements with (current element in second array - current element in first array)
+// compare current elements as difference of two elements: (current element in second array - current element in first array)
 @6
 D=D-M
 // if D < 0, copy second, else copy first, then increment relevant index
 @COPY_2_EL
 D; JLT
 // copying element of first array: get index into destination array as sum of indices into each of the two arrays being merged
-//(COPY_1_EL) never used, but useful to have here TODO
+(COPY_1_EL) // Not used in logic, but helpful to signpost this 'branch' of the merge logic
 @4
 D=M
 @5
@@ -473,14 +468,6 @@ M=M+1
 0; JMP
 // if first array still has elements, copy, otherwise copy rest of second array elements
 (COPY_1_LAST)
-// Push return address
-//@0
-//M=M+1
-//@RET_MERGE
-//D=A
-//@0
-//A=M
-//M=D
 //  Push address of first remaining element of first array
 @0
 M=M+1
@@ -513,14 +500,6 @@ M=D
 @COPY
 0; JMP
 (COPY_2_LAST)
-// Push return address
-//@0
-//M=M+1
-//@RET_MERGE
-//D=A
-//@0
-//A=M
-//M=D
 //  Push address of first remaining element of second array
 @0
 M=M+1
@@ -552,10 +531,11 @@ A=M
 M=D
 @COPY
 0; JMP
-//////
-// COPY
-// Requires operands on the stack 
-// [BASE] return address, source address, length of array, destination address [TOP]
+//
+//	COPY: copies specified array to specified destination address
+//	Requires following arguments on the stack in order:
+//	[BASE OF STACK] return address, address of array's first element, length of array, destination address [TOP OF STACK]
+//
 (COPY)
 // Save destination address in R4
 @0
@@ -611,9 +591,11 @@ M=D
 M=M+1
 @COPY_LOOP
 0; JMP
-//////
-// DIV
-// Requires operands on the stack BASE return address dividend divisor TOP
+//
+//	DIV: performs integer division of dividend by divisor and returns quotient in D register
+//	Requires following arguments on the stack in order:
+//	[BASE OF STACK] return address, value of dividend, value of divisor [TOP OF STACK]
+//
 (DIV)
 // Clear virtual registers
 @1
@@ -667,4 +649,3 @@ D=M
 @1
 A=M
 0; JMP
-//////////////

@@ -3,10 +3,6 @@ output-file testMergesortLength7NegDegWith0Array.out,
 compare-to testMergesortLength7NegDegWith0Array.cmp,
 output-list RAM[20]%D2.6.2 RAM[21]%D2.6.2 RAM[22]%D2.6.2 RAM[23]%D2.6.2 RAM[24]%D2.6.2 RAM[25]%D2.6.2 RAM[26]%D2.6.2,
 
-//breakpoint PC 181,
-
-// Set stack contents
-// return address
 set RAM[101] 2,
 // address of first element
 set RAM[102] 20,
