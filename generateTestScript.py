@@ -13,7 +13,7 @@ def configureArgumentParser():
 
 	inputGroup.add_argument("-i", "--input", nargs='+', help="List of numbers to sort", type=int)
 
-	inputGroup.add_argument("-n", "--numberOfRandomNumbers",  action=GenerateRandomInputAction, help="Number of random integers to generate as input to mergesort. Values are chosen from between -100 and 100. Argument must have value in interval [1,10000].", type=int, choices=range(1,10001), metavar="[1-10000]")
+	inputGroup.add_argument("-n", "--numberOfRandomNumbers",  action=GenerateRandomInputAction, help="Number of random integers to generate as input to mergesort. Values are chosen from between -100 and 100. Argument must have value in interval [1,9500].", type=int, choices=range(1,9501), metavar="[1-9500]")
 
 	return parser
 
@@ -47,7 +47,7 @@ class OutputNameAction(argparse.Action):
 
 class GenerateRandomInputAction(argparse.Action):
 	def __call__(self, parser, namespace, values, option_string):
-		inputNumbers = [random.randint(-100,100) for x in range(0,values)]
+		inputNumbers = [random.randint(-2**14,2**14) for x in range(0,values)]
 		setattr(namespace, "input", inputNumbers)
 	
 if __name__  == "__main__":
