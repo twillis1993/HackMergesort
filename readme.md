@@ -55,11 +55,15 @@ I chose this layout in order to maximise the size of the largest possible instan
 
 `generateTestScript.py` is a Python script which generates `tst` scripts. `tst` scripts can be loaded into the Hack CPU emulator by clicking on the script button (to the left of the breakpoint flag icon). `tst` scripts will load the assembly code into ROM, configure the RAM with input values, and execute the program. This Python script generates `tst` scripts which have as their breakpoint a program counter (PC) value of 3, which corresponds to the `END` location in `mergesortFunction.asm`. Please remember to clear the RAM if running these scripts in succession (I could not find an option in the `tst` language to clear all the RAM).
 
-`generateTestScript.py` requires at minimum a list of integers to sort, which are passed after the `-i` flag, OR a single integer from the interval 1 to 1000, passed with the `-n` flag. The latter specifies the size of a list of random integers to generate, taken from the interval [-100, 100]. `-i` and `-n` are mutually exclusive arguments.
+`generateTestScript.py` requires at minimum a list of integers to sort, which are passed after the `-i` flag, OR a single integer from the interval 1 to 1000, passed with the `-n` flag. The latter specifies the size of a list of random integers to generate, taken from the interval [-2^14, 2^14]. `-i` and `-n` are mutually exclusive arguments.
 
 Run `generateTestScript.py` with `-h` to print usage guidance.
 
 Additionally, with the `-A` one can specify the name of an assembly file to load in the script. With the `-O`, one can also specify the name of the test script to be written out.
+
+## Sample tst script
+
+The `tst` script `myTestScript.tst` included in the submission is a sample script produced by the Python script. It will run mergesort on a input array of size 9500.
 
 ## Verifying the output of the Assembly program after launching with a test script
 
