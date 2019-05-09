@@ -1,6 +1,6 @@
 # Introduction
 
-Mergesort implemented in the Hack assembly language [https://www.nand2tetris.org/](https://www.nand2tetris.org).
+Mergesort implemented in the Hack assembly language ([https://www.nand2tetris.org/](https://www.nand2tetris.org)).
 
 # The assembly program
 
